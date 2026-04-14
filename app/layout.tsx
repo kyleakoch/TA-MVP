@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="mx-auto mt-12 max-w-6xl border-t border-slate-800 px-4 py-6 text-xs text-slate-400">
           <div className="flex items-center justify-between">
             <span>© {new Date().getFullYear()} That&apos;s Available</span>
-            <span>Version A</span>
+            <span>Version B</span>
           </div>
         </footer>
       </body>

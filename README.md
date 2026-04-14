@@ -19,15 +19,20 @@ This project is configured with `output: "export"`, so build artifacts are emitt
 
 ## GitHub Pages setup (important)
 
-If you see your README rendered as a website page, Pages is serving your repository files instead of the Next build output.
+If you still get a 404 at `https://<user>.github.io/<repo>/`, the deploy workflow usually did not run or failed.
 
 1. Go to **Settings → Pages**.
 2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-3. Ensure the workflow `.github/workflows/deploy-pages.yml` runs successfully on `main`.
-4. Open the deployed URL from the workflow summary (it should serve the app, not README text).
+3. Open **Actions** and confirm `Deploy Next.js static export to GitHub Pages` is green on your **default branch**.
+4. If it failed before, use **Run workflow** to retry.
 
-## Why this works
+### Common failure causes fixed here
 
-- `next.config.ts` exports static files to `out/`.
-- The workflow uploads `out/` as the Pages artifact.
-- GitHub Pages then serves the generated `index.html` and assets.
+- Workflow watched only `main`, but your default branch was different.
+- Workflow used `npm ci` without a lockfile.
+
+The workflow now:
+
+- listens on all branches but deploys only from the repo default branch
+- uses `npm install`
+- uploads `out/` (contains `index.html`) to Pages

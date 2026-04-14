@@ -17,8 +17,17 @@ npm run build
 
 This project is configured with `output: "export"`, so build artifacts are emitted as static files in `out/` including `index.html`.
 
-## GitHub Pages notes
+## GitHub Pages setup (important)
 
-- For a repo site like `https://<user>.github.io/TA-MVP/`, the app needs a base path (`/TA-MVP`).
-- `next.config.ts` auto-detects this in GitHub Actions using `GITHUB_REPOSITORY` and `GITHUB_ACTIONS`.
-- Publish the **contents of `out/`** to your Pages branch (or use a Pages workflow that deploys `out/`).
+If you see your README rendered as a website page, Pages is serving your repository files instead of the Next build output.
+
+1. Go to **Settings → Pages**.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+3. Ensure the workflow `.github/workflows/deploy-pages.yml` runs successfully on `main`.
+4. Open the deployed URL from the workflow summary (it should serve the app, not README text).
+
+## Why this works
+
+- `next.config.ts` exports static files to `out/`.
+- The workflow uploads `out/` as the Pages artifact.
+- GitHub Pages then serves the generated `index.html` and assets.
